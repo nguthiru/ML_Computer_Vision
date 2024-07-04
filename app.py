@@ -3,8 +3,11 @@ from PIL import Image
 import tensorflow as tf
 import numpy as np
 from io import BytesIO
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 model_path = './model/CNN_Model.h5'
@@ -16,6 +19,8 @@ loaded_model.compile(optimizer=tf.keras.optimizers.Adamax(learning_rate=0.001),
 
 class_labels = ['Colon Adenocarcinoma', 'Colon Benign Tissue', 'Irrelevant Image', 'Lung Adenocarcinoma', 'Lung Benign Tissue', 'Lung Squamous Cell Carcinoma']
 @app.route('/predict', methods=['POST'])
+@cross_origin()
+
 def predict():
 
     if 'image' not in request.files:

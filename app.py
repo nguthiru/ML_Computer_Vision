@@ -44,6 +44,8 @@ def predict():
         score = tf.nn.softmax(predictions[0])
         predicted_class = class_labels[np.argmax(score)]
 
+        print(score)
+
         return jsonify({'predicted_class': predicted_class})
 
     except Exception as e:
